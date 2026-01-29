@@ -9,7 +9,8 @@ AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 
-; 64-bit app → Program Files
+ArchitecturesInstallIn64BitMode=x64compatible
+
 DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 
@@ -62,4 +63,4 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 ; ================= RUN =================
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\{#MyAppExeName}"; Flags: nowait postinstall skipifsilent shellexec
