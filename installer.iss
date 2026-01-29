@@ -9,12 +9,15 @@ AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 
+; 64-bit installer → Program Files
 ArchitecturesInstallIn64BitMode=x64compatible
+
+; 🔒 Проверка запущенного приложения (mutex)
+AppMutex=OriginalsNaturalistsManagerMutex
 
 DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 
-; ===== OUTPUT =====
 OutputDir=output
 OutputBaseFilename=ONM-{#MyAppVersion}-setup
 
@@ -44,6 +47,12 @@ ru.CreateDesktopIcon=Создать ярлык на рабочем столе
 en.AdditionalOptions=Additional options:
 ru.AdditionalOptions=Дополнительные параметры:
 
+en.KeepSettingsQuestion=Do you want to keep application settings?
+ru.KeepSettingsQuestion=Сохранить настройки приложения?
+
+en.KeepSettingsInfo=If you choose No, all settings will be deleted.
+ru.KeepSettingsInfo=Если выбрать «Нет», все настройки будут удалены.
+
 ; ================= TASKS =================
 
 [Tasks]
@@ -64,3 +73,33 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Flags: nowait postinstall skipifsilent shellexec
+
+; ================= CODE =================
+
+[Code]
+var
+  KeepSettings: Boolean;
+
+procedure InitializeUninstallProgressForm;
+begin
+  KeepSettings :=
+    MsgBox(
+      ExpandConstant('{cm:KeepSettingsQuestion}') + #13#10#13#10 +
+      ExpandConstant('{cm:KeepSettingsInfo}'),
+      mbConfirmation,
+      MB_YESNO or MB_DEFBUTTON1
+    ) = IDYES;
+end;
+
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+begin
+  if (CurUninstallStep = usUninstall) and (not KeepSettings) then
+  begin
+    DelTree(
+      ExpandConstant('{userappdata}\OriginalsNaturalistsManager'),
+      True,
+      True,
+      True
+    );
+  end;
+end;
