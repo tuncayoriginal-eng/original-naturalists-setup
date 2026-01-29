@@ -1,26 +1,26 @@
 #define MyAppName "Originals Naturalists Manager"
-#define MyAppVersion "0.0.3"
+#define MyAppVersion "0.0.4"
 #define MyAppPublisher "Originals"
 #define MyAppExeName "OriginalsNaturalistsManager.exe"
 
 [Setup]
-AppId={{B8A2F6C7-7E4B-4C0A-9A55-ONM000000001}
+AppId={{B8A2F6C7-7E4B-4C0A-9A55-ONM-000000004}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 
-; ✅ Program Files
+; 64-bit app → Program Files
 DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 
+; ===== OUTPUT =====
 OutputDir=output
-OutputBaseFilename=OriginalsNaturalistsManager_Setup
+OutputBaseFilename=ONM-{#MyAppVersion}-setup
+
 Compression=lzma
 SolidCompression=yes
 
 WizardStyle=modern
-
-; 🔥 ОБЯЗАТЕЛЬНО для Program Files
 PrivilegesRequired=admin
 
 DisableProgramGroupPage=yes
@@ -46,18 +46,12 @@ ru.AdditionalOptions=Дополнительные параметры:
 ; ================= TASKS =================
 
 [Tasks]
-Name: "desktopicon"; \
-Description: "{cm:CreateDesktopIcon}"; \
-GroupDescription: "{cm:AdditionalOptions}"; \
-Flags: unchecked
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalOptions}"; Flags: unchecked
 
 ; ================= FILES =================
 
 [Files]
-Source: "OriginalsNaturalistsManager.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "OriginalsNaturalistsManager.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "OriginalsNaturalistsManager.runtimeconfig.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: "OriginalsNaturalistsManager.deps.json"; DestDir: "{app}"; Flags: ignoreversion
+Source: "*"; DestDir: "{app}"; Flags: recursesubdirs ignoreversion
 
 ; ================= ICONS =================
 
