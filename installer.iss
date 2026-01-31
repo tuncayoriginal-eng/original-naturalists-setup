@@ -1,18 +1,18 @@
 #define MyAppName "Originals Naturalists Manager"
-#define MyAppVersion "0.0.4"
+#define MyAppVersion "0.0.5"
 #define MyAppPublisher "Originals"
 #define MyAppExeName "OriginalsNaturalistsManager.exe"
 
 [Setup]
-AppId={{B8A2F6C7-7E4B-4C0A-9A55-ONM-000000004}
+AppId={{B8A2F6C7-7E4B-4C0A-9A55-0A1B2C3D0005}}
+
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 
-; 64-bit installer → Program Files
-ArchitecturesInstallIn64BitMode=x64compatible
+SetupIconFile=onm.ico
 
-; 🔒 Проверка запущенного приложения (mutex)
+ArchitecturesInstallIn64BitMode=x64compatible
 AppMutex=OriginalsNaturalistsManagerMutex
 
 DefaultDirName={autopf}\{#MyAppName}
@@ -61,7 +61,14 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 ; ================= FILES =================
 
 [Files]
-Source: "*"; DestDir: "{app}"; Flags: recursesubdirs ignoreversion
+Source: "OriginalsNaturalistsManager.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "onm.ico"; DestDir: "{app}"; Flags: ignoreversion
+
+Source: "D3DCompiler_47_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "PenImc_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "PresentationNative_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "vcruntime140_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "wpfgfx_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 ; ================= ICONS =================
 
@@ -70,9 +77,10 @@ Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 ; ================= RUN =================
+; ✔ ОДНА СТРОКА — ОБЯЗАТЕЛЬНО
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Flags: nowait postinstall skipifsilent shellexec
+Filename: "{app}\{#MyAppExeName}"; Description: "Открыть {#MyAppExeName}"; Flags: nowait postinstall skipifsilent shellexec
 
 ; ================= CODE =================
 
