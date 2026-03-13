@@ -1,5 +1,5 @@
 #define MyAppName "Originals Naturalists Manager"
-#define MyAppVersion "0.0.5"
+#define MyAppVersion "0.0.6"
 #define MyAppPublisher "Originals"
 #define MyAppExeName "OriginalsNaturalistsManager.exe"
 
